@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Админ-панель</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: url('https://images.unsplash.com/photo-1581092910121-60e8e4bb5003?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+    }
+
+    .overlay {
+      background: rgba(0, 0, 0, 0.7);
+      min-height: 100vh;
+      padding: 50px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1, h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    #loginForm, #adminPanel {
+      background-color: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      border-radius: 10px;
+      padding: 30px;
+      max-width: 400px;
+      width: 100%;
+      color: #fff;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #ffd700;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #e6c200;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+      background-color: rgba(255, 255, 255, 0.9);
+      color: #000;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f8f8f8;
+    }
+
+    #logout {
+      margin-top: 20px;
+      background-color: #ff4d4d;
+      color: white;
+    }
+
+    #loginStatus {
+      margin-top: 10px;
+      color: red;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <div id="loginForm">
+      <h2>Вход в админку</h2>
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Пароль" required />
+      <button onclick="login()">Войти</button>
+      <p id="loginStatus"></p>
+    </div>
+
+    <div id="adminPanel" style="display: none;">
+      <h1>Ұсыныстар тізімі</h1>
+      <button id="logout">Шығу</button>
+	  <button id="exportCSV">📥CSV форматында жүктеу</button>
+      <table id="applicationsTable">
+        <thead>
+          <tr>
+            <th>Реті</th>
+            <th>Аты-жөні</th>
+            <th>Телефон нөмірі</th>
+            <th>Күні</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+    const supabaseUrl = 'https://zuikkwmransdlfqopqww.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp1aWtrd21yYW5zZGxmcW9wcXd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEzNzY4NDQsImV4cCI6MjA2Njk1Mjg0NH0.ZLL9rFrSyX_RDkc4hKhpHjLwgu3R9xxoICo4hu1__ic'; // 🔐 ваш ключ
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    async function login() {
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const status = document.getElementById('loginStatus');
+
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+      if (error) {
+        status.textContent = 'Ошибка входа: ' + error.message;
+        return;
+      }
+
+      const { user } = data;
+
+      const role = user?.user_metadata?.role;
+      if (role !== 'admin') {
+        status.textContent = 'Доступ запрещён. Вы не админ.';
+        await supabase.auth.signOut();
+        return;
+      }
+
+      status.textContent = '';
+      document.getElementById('loginForm').style.display = 'none';
+      document.getElementById('adminPanel').style.display = 'block';
+      loadApplications();
+    }
+
+    async function loadApplications() {
+      const { data, error } = await supabase
+        .from('applications')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      const tbody = document.querySelector('#applicationsTable tbody');
+      tbody.innerHTML = '';
+
+      if (error) {
+        tbody.innerHTML = '<tr><td colspan="4">Ошибка загрузки: ' + error.message + '</td></tr>';
+        return;
+      }
+
+      data.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${row.id}</td>
+          <td>${row.fio}</td>
+          <td>${row.phone}</td>
+          <td>${new Date(row.created_at).toLocaleString()}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    document.getElementById('logout').onclick = async () => {
+      await supabase.auth.signOut();
+      location.reload();
+    };
+
+    // Автоавторизация при наличии сессии
+    const { data: sessionData } = await supabase.auth.getSession();
+    const user = sessionData?.session?.user;
+    if (user && user.user_metadata?.role === 'admin') {
+      document.getElementById('loginForm').style.display = 'none';
+      document.getElementById('adminPanel').style.display = 'block';
+      loadApplications();
+    }
+
+    window.login = login;
+	
+	function exportTableToCSV(filename) {
+  const rows = document.querySelectorAll('#applicationsTable tr');
+  const csv = [];
+
+  for (const row of rows) {
+    const cols = row.querySelectorAll('td, th');
+    const rowData = Array.from(cols).map(col => `"${col.innerText.replace(/"/g, '""')}"`);
+    csv.push(rowData.join(','));
+  }
+
+  const csvContent = csv.join('\n');
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement('a');
+  link.setAttribute('href', url);
+  link.setAttribute('download', filename);
+  link.click();
+}
+
+document.getElementById('exportCSV').onclick = () => {
+  exportTableToCSV('zayavki.csv');
+};
+
+
+  </script>
+</body>
+</html>

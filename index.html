@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<style>
+  html {
+    scroll-behavior: smooth;
+  }
+</style>
+  <meta charset="UTF-8">
+  <title>Заявка на конкурс</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: url('https://images.pexels.com/photos/5709717/pexels-photo-5709717.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+    }
+
+    header {
+      text-align: center;
+      padding: 60px 20px 20px;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 32px;
+    }
+
+    header p {
+      font-size: 18px;
+      margin-top: 10px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 50px auto;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+    }
+
+    input {
+      background: #fff;
+      color: #000;
+    }
+
+    button {
+      background: #ffcc00;
+      color: #000;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #ffdb4d;
+    }
+
+    .nav-buttons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .nav-buttons a {
+      background: #fff;
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    #status {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+<header style="display: flex; justify-content: space-between; align-items: center; padding: 20px;">
+  <div>
+    <h1 style="margin: 0; font-size: 20px;">Байқау платформасы</h1>
+  </div>
+  <div>
+    <a href="admin.html" style="
+      background-color: #ffd700;
+      padding: 10px 20px;
+      color: black;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    " onmouseover="this.style.backgroundColor='#e6c200'" onmouseout="this.style.backgroundColor='#ffd700'">
+      Кіру
+    </a>
+  </div>
+</header>
+
+  <header>
+  <h1 style="text-align: center; font-size: 28px; font-weight: 700; text-transform: uppercase; margin-bottom: 10px;">
+    ШЫМКЕНТ ҚАЛАСЫНЫҢ КРЕАТИВТІ КӘСІПКЕРЛЕРІ АРАСЫНДАҒЫ БАЙҚАУ
+  </h1>
+  <p style="text-align: center; font-size: 18px; color: #ffffff; margin-bottom: 40px;">
+    Заявка қабылдау мерзімі <strong>2 - 8 шілде</strong> аралығында
+  </p>
+</header>
+
+<!-- Блок с условиями и номинациями -->
+<section id="rules" style="background-color: transparent; padding: 40px 20px;">
+  <div class="container" style="
+    background: rgba(0, 0, 0, 0.7); 
+    padding: 40px 30px;
+    border-radius: 12px;
+    color: white;
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: 'Arial', sans-serif;
+  ">
+    <h2 style="font-size: 24px; border-bottom: 2px solid #fff; padding-bottom: 10px; margin-bottom: 20px;">
+      КОНКУРСҚА ҚАТЫСУ ШАРТТАРЫ
+    </h2>
+    <ol style="padding-left: 20px; line-height: 1.8;">
+      <li>Қатысушы кәсіпкер Шымкент қаласында кәсіпкер ретінде тіркелуі тиіс.</li>
+      <li>Кәсіпкер өз кәсібінде жасалған бұйымдарды, жұмыстарды, технологияны немесе қызмет түрін нақты көрсетіп, таныстыра білуі қажет.</li>
+      <li>Әр кәсіпкер жұмысына авторлық шектеулер мен заңға сәйкес зияткерлік меншік құқықтарын сақтауы тиіс. Кез келген плагиат немесе рұқсатсыз көшірілген жұмыс қабылданбайды.</li>
+      <li>Қатысушылар байқауға өтінімдерін белгіленген мерзімге дейін тапсыруы тиіс.</li>
+      <li>Қазылар алқасының шешімі түпкілікті болып табылады және қайта қаралмайды.</li>
+      <li>Байқауға қатысу – бұл барлық шарттармен автоматты түрде келісу болып есептеледі.</li>
+      <li>Қатысушының жұмысы фото/видео түсірілімге қатысуы мүмкін және әлеуметтік желі мен БАҚ беттерінде жарияланады. Қатысушы мұнымен келіседі.</li>
+    </ol>
+
+    <h2 style="margin-top: 40px; font-size: 24px; border-bottom: 2px solid #fff; padding-bottom: 10px; margin-bottom: 20px;">
+      ҰСЫНЫЛАТЫН НОМИНАЦИЯЛАР
+    </h2>
+    <ul style="padding-left: 20px; line-height: 1.8; list-style-type: square;">
+      <li>Қыш құмыра өнері</li>
+      <li>Зергерлік өнер</li>
+      <li>Ағаш өнімдері</li>
+      <li>Киім дизайні</li>
+      <li>Киіз және тоқыма өнімдер</li>
+      <li>Видеография</li>
+      <li>Фотография</li>
+      <li>Анимация және кино</li>
+      <li>Былғары өнімдері</li>
+      <li>Суретшілер</li>
+    </ul>
+
+    <div style="text-align: center; margin-top: 40px;">
+  <button onclick="showForm()" style="
+    padding: 12px 24px;
+    font-size: 16px;
+    background-color: #ffffff;
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s ease;
+  "
+    onmouseover="this.style.backgroundColor='#ddd'"
+    onmouseout="this.style.backgroundColor='#fff'">
+    Өтінім беру
+  </button>
+</div>
+
+  </div>
+</section>
+
+
+  <!-- Скрытая форма -->
+<div class="form-container hidden" id="formSection">
+  <form id="form">
+    <input type="text" name="fio" placeholder="Ф.И.О." required>
+    <input type="tel" name="phone" placeholder="Телефон" required>
+    <button type="submit">Ұсыныс жіберу</button>
+  </form>
+  <p id="status"></p>
+</div>
+<!-- Стили для скрытия и анимации -->
+<style>
+  .form-container {
+  background: rgba(0, 0, 0, 0.6); /* Чёрный с прозрачностью */
+  color: white;
+  border-radius: 10px;
+  padding: 0 20px;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.7s ease, max-height 0.7s ease, padding 0.7s ease;
+  margin: 40px auto;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.form-container.visible {
+  opacity: 1;
+  max-height: 600px;
+  padding: 30px 20px;
+}
+
+.form-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-container input {
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-container button {
+  padding: 12px;
+  font-size: 16px;
+  background-color: #ffd700;
+  border: none;
+  border-radius: 5px;
+  color: black;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-container button:hover {
+  background-color: #e6c200;
+}
+
+#status {
+  margin-top: 15px;
+  text-align: center;
+}
+
+</style>
+
+<!-- Скрипт -->
+<script>
+  function showForm() {
+    const formSection = document.getElementById('formSection');
+    formSection.classList.add('visible');
+    formSection.scrollIntoView({ behavior: 'smooth' });
+  }
+</script>
+
+  <!-- Supabase Script -->
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+    const supabaseUrl = 'https://zuikkwmransdlfqopqww.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp1aWtrd21yYW5zZGxmcW9wcXd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEzNzY4NDQsImV4cCI6MjA2Njk1Mjg0NH0.ZLL9rFrSyX_RDkc4hKhpHjLwgu3R9xxoICo4hu1__ic';
+
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    const form = document.getElementById('form');
+    const status = document.getElementById('status');
+
+    form.onsubmit = async (e) => {
+      e.preventDefault();
+
+      const fio = form.fio.value.trim();
+      const phone = form.phone.value.trim();
+
+      const { error } = await supabase
+        .from('applications')
+        .insert([{ fio, phone }]);
+
+      if (error) {
+        status.textContent = '❌ Ошибка: ' + error.message;
+        status.style.color = 'red';
+      } else {
+        status.textContent = '✅ Ұсыныс жіберілді!';
+        status.style.color = 'lightgreen';
+        form.reset();
+      }
+    };
+  </script>
+
+</body>
+</html>
